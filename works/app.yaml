@@ -1,0 +1,23 @@
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: false
+
+handlers:
+- url: /foo
+  static_dir: foo
+- url: /bar
+  static_dir: bar
+- url: /bar
+  static_files: bar/index.html
+  upload: bar/.*
+- url: /.*
+  script: main.app
+
+# In this case we can correctly find "/foo/index.html" and "/bar/index.html"
+# as different things. And anything else gets passed to main.app, including
+# "/pata".
+
+# Note also that he extra "url: /bar" static_files handler causes
+# "/bar" to serve bar/index.html, unlike "/foo" which does falls through
+# to the "url: /.*" script handler.
