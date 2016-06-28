@@ -1,0 +1,19 @@
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: false
+
+handlers:
+- url: /
+  static_dir: foo
+- url: /
+  static_dir: bar
+- url: /bar
+  static_dir: bar
+- url: /pata
+  script: main.app
+
+# Note that nothing from bar will ever be served in this config,
+# because everything matches the first "url: /" handler.
+# Even a request to /bar/index.html (which looks "more specific")
+# will still match the top "url: /" for "static_dir: foo" first.
